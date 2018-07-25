@@ -31,5 +31,6 @@ namespace Superheros.Models
         }
 
         public DbSet<Person> Person { get; set; }
+        public DbSet<Hero> Heroes { get; set; }
     }
 }
