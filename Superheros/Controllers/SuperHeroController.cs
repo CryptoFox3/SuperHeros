@@ -10,12 +10,11 @@ namespace Superheros.Controllers
     public class SuperHeroController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
-        // GET: SuperHero
+     
         public ActionResult Index()
         {
             return View(db.Heroes.ToList());
         }
-
 
         public ActionResult Create()
         {
@@ -59,7 +58,7 @@ namespace Superheros.Controllers
             if (ModelState.IsValid)
             {
                 var deleteHero = db.Heroes.Where(h => hero.ID.Equals(hero.ID)).First();
-                db.Heroes.Remove(deleteHero);
+                db.Heroes.Remove(hero);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -69,9 +68,7 @@ namespace Superheros.Controllers
         [HttpPost]
         public ActionResult Details([Bind(Include = "")]Hero hero)
         {
- 
                 return RedirectToAction("Index");
-         
         }
 
         [HttpPost]
