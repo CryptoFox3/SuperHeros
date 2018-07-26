@@ -1,4 +1,5 @@
-﻿using Superheros.Models;
+﻿using Microsoft.AspNet.Identity;
+using Superheros.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,13 @@ using System.Web.Mvc;
 
 namespace Superheros.Controllers
 {
-    public class SuperHeroController : Controller
+    public class HeroesController : Controller
     {
         ApplicationDbContext db = new ApplicationDbContext();
      
         public ActionResult Index()
         {
+            string currentUserId = User.Identity.GetUserId();
             return View(db.Heroes.ToList());
         }
 
@@ -53,12 +55,12 @@ namespace Superheros.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public ActionResult Delete([Bind(Include = "")]Hero hero)
+        public ActionResult Delete(Hero hero)
         {
             if (ModelState.IsValid)
             {
                 var deleteHero = db.Heroes.Where(h => hero.ID.Equals(hero.ID)).First();
-                db.Heroes.Remove(hero);
+                db.Heroes.Remove(deleteHero);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
